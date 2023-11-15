@@ -10,8 +10,28 @@
 </div>
 
 <div class="form-floating mb-3">
-    <input type="number" class="form-control" id="steps" placeholder="" min="0" value="0">
-    <label for="steps">Lépésszám</label>
+    <select id="type">
+        <option value="0">
+            Kiadás
+        </option>
+        <option value="1">
+            Bevétel
+        </option>
+    </select>
+    <label for="type">Milyen adat?</label>
 </div>
 
-<button class="btn btn-primary mb-3" onclick="addSteps()">Rögzítés</button>
+<div class="form-floating mb-3">
+    <input type="number" class="form-control" id="items" placeholder="" min="0" value="0">
+    <label for="items">Pénzmennyiség (Ft)</label>
+</div>
+
+<div class="form-floating mb-3">
+    <select id="tipusok">
+        <!--Dinamikusan generált rész-->
+    </select>
+    <input type="text" class="form-control" id="custom_tipusok" placeholder="">
+    <label for="tipusok">Kategóriák</label>
+</div>
+
+<button class="btn btn-primary mb-3" onclick="addItems()">Rögzítés</button>
