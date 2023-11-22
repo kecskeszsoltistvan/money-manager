@@ -3,6 +3,7 @@ function showChart(){
     let labels = [];
     let income = [];
     let expense = [];
+    let daily_status = [];
 
   axios.get(`${serverURL}/items/userID/eq/${loggedUser.ID}`).then((res) => {
     res.data.sort((a,b) => a.date.localeCompare(b.date));
@@ -14,11 +15,29 @@ function showChart(){
       else {
         expense.push(item.amount * -1);
       }
+      
+      axios.get(`${serverURL}/items/date/eq/${item.date}/`).then(req =>{
+        let x = (daily_status.length == 0) ? 0 : daily_status[daily_status.length - 1];
+        req.data.forEach(instance => {
+          console.log(instance);
+          if (instance.userID == loggedUser.ID){
+            if(instance.typeID == 1){
+              x += instance.amount
+            }
+            else {
+              x -= instance.amount
+            }
+          }
+        })
+        daily_status.push(x);
+      })
+      
     });
   });
 
   setTimeout(() => {
     const ctx = document.getElementById("myChart1");
+    const cty = document.getElementById("myChart2");
 
     new Chart(ctx, {
       type: "bar",
@@ -51,6 +70,32 @@ function showChart(){
           },
           y: {
             stacked: true
+          }
+        }
+      },
+    });
+
+    new Chart(cty, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Állapot:",
+            data: daily_status,
+            borderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Pénz mennyisége összesen'
           }
         }
       },
