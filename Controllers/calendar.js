@@ -3,13 +3,21 @@ function showCalendar(){
     let myEvents = [];
     axios.get(`${serverURL}/items/userID/eq/${loggedUser.ID}`).then(res=>{
         res.data.forEach(item => {
-            myEvents.push({
-                title: item.amount,
-                start: item.date,
-                allDay: true,
-                backgroundColor: item.typeID == 0 ? '#6c3333' : '#336c56',
-                borderColor: item.typeID == 0 ? '#6c3333' : '#336c56',
+            console.log(`${item.tagID}`);
+            let category = ""
+            axios.get(`${serverURL}/catgs/ID/eq/${item.tagID}`).then(catDATA => {
+                category = catDATA.data[0].tagname;
+                
+                myEvents.push({
+                    title: `${category}:\n${item.amount}`,
+                    start: item.date,
+                    allDay: true,
+                    backgroundColor: item.typeID == 0 ? '#6c3333' : '#336c56',
+                    borderColor: item.typeID == 0 ? '#6c3333' : '#336c56',
+                })
             })
+
+            
         });
     });
 
@@ -31,5 +39,5 @@ function showCalendar(){
         });
         
         calendar.render();
-    }, 100);
+    }, 400);
 }

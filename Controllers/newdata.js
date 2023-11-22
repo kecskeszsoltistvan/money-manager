@@ -35,18 +35,13 @@ function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit 
         showMessage("Nem adtál meg minden adatot!");
     }
     else{
-        console.log(`Má' megint kezdődik`);
         let vane = false;
         let upID = -1;
         axios.get(`${serverURL}/items/userID/eq/${loggedUser.ID}`).then(res=>{
-            console.log("Csere keresés...");
             res.data.forEach(item => {
             if (item.userID == loggedUser.ID && item.date.split('T')[0] == date.value && item.typeID == type.value){
                 axios.get(`${serverURL}/catgs/`).then(catDATA => {
-                    console.log(catDATA);
                     catDATA.data.forEach(thing => {
-                        console.log(thing.ID, item.tagID);
-                        console.log(thing.ID == item.tagID);
                         if (thing.ID == item.tagID){
                             upID = item.ID
                             vane = true
@@ -57,7 +52,6 @@ function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit 
             }
             })
         })
-
         setTimeout(()=>{
             if (vane){
                 let data = {
@@ -78,7 +72,6 @@ function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit 
                     amount : items.value,
                     tagID : null
                 }
-                console.log(`${custom_tipusok.value.length == 0 ? tipusok.value : custom_tipusok.value}`);
                 if (custom_tipusok.value.length == 0){ // Ha nem saját kategóriát adunk meg
                     axios.get(`${serverURL}/catgs/`).then(catDATA => {
                         catDATA.data.forEach(catInstance =>{
