@@ -26,12 +26,12 @@ function TagLoader(){
 function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit hosszú is, de legalább működik, úgyhogy kit érdekel.
 
     let date = document.querySelector('#date');
-    let type = document.querySelector('#type');
+    let type = document.querySelector('input[name = "inlineRadioOptions"]:checked');
     let items = document.querySelector('#items');
     let tipusok = document.querySelector('#tipusok');
     let custom_tipusok = document.querySelector('#custom_tipusok');
 
-    if (date.value == ""){
+    if (date.value == "" || type == null){
         showMessage("Nem adtál meg minden adatot!");
     }
     else{

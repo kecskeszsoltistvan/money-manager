@@ -10,15 +10,14 @@
 </div>
 
 <div class="form-floating mb-3">
-    <select id="type">
-        <option value="0">
-            Kiadás
-        </option>
-        <option value="1">
-            Bevétel
-        </option>
-    </select>
-    <label for="type">Milyen adat?</label>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="0">
+    <label class="form-check-label" for="inlineRadio1">Kiadás</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="1">
+    <label class="form-check-label" for="inlineRadio2">Bevétel</label>
+    </div>
 </div>
 
 <div class="form-floating mb-3">
@@ -27,11 +26,16 @@
 </div>
 
 <div class="form-floating mb-3">
-    <select id="tipusok">
+    <select class="form-select" id="tipusok" aria-label="Kategóriák">
         <!--Dinamikusan generált rész-->
     </select>
-    <input type="text" class="form-control" id="custom_tipusok" placeholder="">
     <label for="tipusok">Kategóriák</label>
 </div>
+
+<div class="form-floating mb-3">
+    <input type="text" class="form-control" id="custom_tipusok" placeholder="">
+    <label for="tipusok">Új kategória megadása</label>
+</div>
+
 
 <button class="btn btn-primary mb-3" onclick="addItems()">Rögzítés</button>
