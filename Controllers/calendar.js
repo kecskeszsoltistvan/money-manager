@@ -7,7 +7,6 @@ function showCalendar(){
             let category = ""
             axios.get(`${serverURL}/catgs/ID/eq/${item.tagID}`).then(catDATA => {
                 category = catDATA.data[0].tagname;
-                
                 myEvents.push({
                     title: `${category}:\n${item.amount}`,
                     start: item.date,

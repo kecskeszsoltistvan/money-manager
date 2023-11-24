@@ -1,39 +1,44 @@
 
 function showChart(){
-    let labels = [];
-    let income = [];
-    let expense = [];
-    let daily_status = [];
+  let stuff = {
+    labels : [],
+    income : [],
+    expense : [],
+    daily_status : []
+  }
 
   axios.get(`${serverURL}/items/userID/eq/${loggedUser.ID}`).then((res) => {
     res.data.sort((a,b) => a.date.localeCompare(b.date));
     res.data.forEach((item) => {
-      labels.push(item.date.toString().split("T")[0]);
-      if (item.typeID == 1){
-        income.push(item.amount);
-      }
-      else {
-        expense.push(item.amount * -1);
-      }
-      
+      if (!stuff.labels.includes(item.date.toString().split("T")[0])){
+        stuff.labels.push(item.date.toString().split("T")[0])
+      };
       axios.get(`${serverURL}/items/date/eq/${item.date}/`).then(req =>{
-        let x = (daily_status.length == 0) ? 0 : daily_status[daily_status.length - 1];
+        let x = (stuff.daily_status.length == 0) ? 0 : stuff.daily_status[stuff.daily_status.length - 1];
+        let y = 0;
+        let z = 0;
         req.data.forEach(instance => {
-          console.log(instance);
           if (instance.userID == loggedUser.ID){
             if(instance.typeID == 1){
-              x += instance.amount
+              x += instance.amount;
+              y += instance.amount;
             }
             else {
               x -= instance.amount
+              z -= instance.amount;
             }
           }
         })
-        daily_status.push(x);
+        stuff.daily_status.push(x);
+        stuff.income.push(y);
+        stuff.expense.push(z);
+        y = 0;
+        z = 0;
       })
       
     });
   });
+console.log(stuff);
 
   setTimeout(() => {
     const ctx = document.getElementById("myChart1");
@@ -42,16 +47,16 @@ function showChart(){
     new Chart(ctx, {
       type: "bar",
       data: {
-        labels: labels,
+        labels: stuff.labels,
         datasets: [
           {
             label: "Bevétel:",
-            data: income,
+            data: stuff.income,
             borderWidth: 3,
           },
           {
             label: "Kiadás:",
-            data: expense,
+            data: stuff.expense,
             borderWidth: 3,
           }
         ],
@@ -78,11 +83,11 @@ function showChart(){
     new Chart(cty, {
       type: 'line',
       data: {
-        labels: labels,
+        labels: stuff.labels,
         datasets: [
           {
             label: "Állapot:",
-            data: daily_status,
+            data: stuff.daily_status,
             borderWidth: 3,
           },
         ],
@@ -100,5 +105,5 @@ function showChart(){
         }
       },
     });
-  }, 500);
+  }, 1000);
 }

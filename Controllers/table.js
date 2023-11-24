@@ -1,7 +1,6 @@
 function getAllSteps(){
     let tbody = document.querySelector('tbody');
     let sumSteps = document.querySelector('#sumSteps');
-
     axios.get(`${serverURL}/items/userID/eq/${loggedUser.ID}`).then(res=>{
         let i = 0;
         let sum = 0;
@@ -11,7 +10,6 @@ function getAllSteps(){
             let td1 = document.createElement('td');
             let td2 = document.createElement('td');
             let td3 = document.createElement('td');
-
             i++;
             if (item.typeID == 1) {
                 sum += item.amount;
@@ -19,10 +17,7 @@ function getAllSteps(){
             else{
                 sum -= item.amount;
             }
-            
-
             td1.innerHTML = i + '.';
-
             td2.innerHTML = item.date.split('T')[0];
             if (item.typeID == 1) {
                 td3.innerHTML = item.amount;
@@ -37,11 +32,9 @@ function getAllSteps(){
             tr.appendChild(td3);
             tbody.appendChild(tr);
         });
-
         sumSteps.innerHTML = sum;
     })
 }
-
 function renderData(){
     setTimeout(()=>{getAllSteps();}, 200);
 }
