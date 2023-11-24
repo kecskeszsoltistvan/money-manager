@@ -2,12 +2,9 @@ function setMaxDate(){
     let date = document.querySelector('#date');
     date.max =  new Date().toISOString().split("T")[0];
 }
-
 function getToday(){
     setTimeout(()=>{setMaxDate()}, 500);
 }
-
-
 function TagLoader(){
     setTimeout(()=>{
 
@@ -22,7 +19,6 @@ function TagLoader(){
         })
     }, 500);
     }
-
 function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit hosszú is, de legalább működik, úgyhogy kit érdekel.
 
     let date = document.querySelector('#date');
@@ -131,6 +127,5 @@ function addItems(){ // Ez az egész egy kín szenvedés volt, lehet egy kicsit 
         
     }
 }
-
 getToday();
 TagLoader();
